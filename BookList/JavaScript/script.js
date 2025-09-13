@@ -2,10 +2,11 @@ let books = [];
 
 document.getElementById("addBtn").addEventListener("click", addBook);
 
-
-document.getElementById("search").addEventListener("keyup", searchBookBtn)
 document.getElementById("searchBtn").addEventListener("keyup", searchBookBtn)
 
+// function searchBookBtn() {
+//     alert("click")
+// }
 
 function addBook(){
     const title = document.getElementById("title").value.trim();
@@ -63,9 +64,13 @@ function deleteBook(index) {
 
 
 function searchBookBtn() {
+
+    // const search = document.getElementById("search").value.trim();
     const query = document.getElementById("search").value.toLowerCase();
+    console.log(query)
     const filtered = books.filter(book =>
-        book.title.toLowerCase().includes(query) || book.director.toLowerCase().includes(query));
+        book.title.toLowerCase().includes(query) || book.author.toLowerCase().includes(query));
+    console.log(filtered)
 
         displayBooks(filtered);
 }
