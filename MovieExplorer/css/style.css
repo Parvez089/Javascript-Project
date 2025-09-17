@@ -29,8 +29,7 @@ body{
     padding: 4px;
     padding-left: 4px;
     background: #ffffff;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
+    border-radius: 12px;
     border: none;
     outline: none;
     
@@ -91,6 +90,7 @@ body{
 .container #product-card ul li p{
     text-align: center;
 }
+
 
 .container #product-card ul li button{
     width: 100%;

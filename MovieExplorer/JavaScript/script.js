@@ -8,27 +8,31 @@ let currentCategory = "";
 
 const searchInput = document.getElementById("search-input")
 // const searchBtn = document.getElementById("searchBtn")
-document.getElementById("searchBtn").addEventListener("keyup", searchProductBtn)
 
 const productCard = document.getElementById("product-card");
 const pagination = document.getElementById("pagination")
 
-const ul = document.createElement("ul")
 
 
 
+function fetchProducts() {
 
-function displayProducts(productList = products) {
-
-    ul.innerHTML = "";
     fetch("https://dummyjson.com/products?limit=50&skip=0")
         .then((res) => res.json())
         .then((data) => {
             products = data.products
 
+            displayProducts(products)
+
+        })
+}
+function displayProducts(productList = products) {
 
 
-            products.map(product => {
+    productCard.innerHTML = ""
+
+    const ul = document.createElement("ul")
+    productList.forEach(product => {
             // console.log(product)
 
                 let li = document.createElement('li')
@@ -58,39 +62,32 @@ function displayProducts(productList = products) {
                 ul.appendChild(li)
                 // console.log(ul)
 
-        })
     })
-
     productCard.appendChild(ul)
 
 }
-displayProducts()
+
 
 function searchProductBtn() {
 
     const normalize = (str) => str.toLowerCase().trim().replace(/\s+/g, " ");
     const search = normalize(document.getElementById("search-input").value);
+    console.log(search)
 
 
-
+    if (search === "") {
+        displayProducts(products)
+        return;
+    }
 
     const filteredValue = products.filter((item) =>
+        normalize(item.title || "").includes(search)
+    );
 
-        normalize(item.title || "").includes(search) || normalize(item.title || "").toLowerCase().trim().includes(search)
-    )
-
-    console.log(filteredValue)
     displayProducts(filteredValue)
 }
 
-// function searchBookBtn() {
 
-//     // const search = document.getElementById("search").value.trim();
-//     const query = document.getElementById("search").value.toLowerCase();
-//     console.log(query)
-//     const filtered = books.filter(book =>
-//         book.title.toLowerCase().includes(query) || book.author.toLowerCase().includes(query));
-//     console.log(filtered)
+document.getElementById("search-input").addEventListener("keyup", searchProductBtn)
 
-//     displayBooks(filtered);
-// }
+fetchProducts()
